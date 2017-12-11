@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KodeinSample</string>
+
+    <string name="trend">Trend</string>
+    <string name="random">Random</string>
+    <string name="search">Search</string>
 </resources>

@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
+    <style name="AppTheme.TextView" />
+
+    <style name="AppTheme.TextView.Main">
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="autoSizeMaxTextSize">300sp</item>
+        <item name="autoSizeMinTextSize">14sp</item>
+        <item name="autoSizeTextType">uniform</item>
+    </style>
+
 </resources>
