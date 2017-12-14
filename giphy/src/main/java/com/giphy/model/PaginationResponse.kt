@@ -7,7 +7,7 @@ data class PaginationResponse(
         /**
          * GIF Object
          */
-        val data: Gif,
+        val data: List<Gif>,
         /**
          * Pagination Object
          */

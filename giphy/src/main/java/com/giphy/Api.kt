@@ -2,7 +2,9 @@ package com.giphy
 
 import com.giphy.model.PaginationResponse
 import com.giphy.model.Response
+import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * https://developers.giphy.com/docs/
@@ -22,14 +24,14 @@ interface Api {
      */
     @GET("/v1/gifs/search")
     fun search(
-            api_key: String,
-            q: String,
-            limit: Int? = 25,
-            offset: Int? = null,
-            rating: String?,
-            lang: String? = null,
-            fmt: String? = null
-    ): List<PaginationResponse>
+            @Query("api_key") api_key: String,
+            @Query("q") q: String,
+            @Query("limit") limit: Int? = 25,
+            @Query("offset") offset: Int? = null,
+            @Query("rating") rating: String? = null,
+            @Query("lang") lang: String? = null,
+            @Query("fmt") fmt: String? = null
+    ): Single<PaginationResponse>
 
     /**
      * Fetch GIFs currently trending online. Hand curated by the GIPHY editorial team. The data returned mirrors the GIFs showcased on the GIPHY homepage. Returns 25 results by default.
@@ -42,12 +44,12 @@ interface Api {
      */
     @GET("/v1/gifs/trending")
     fun trending(
-            api_key: String,
-            limit: Int? = 25,
-            offset: Int? = null,
-            rating: String?,
-            fmt: String? = null
-    ): List<PaginationResponse>
+            @Query("api_key") api_key: String,
+            @Query("limit") limit: Int? = 25,
+            @Query("offset") offset: Int? = null,
+            @Query("rating") rating: String? = null,
+            @Query("fmt") fmt: String? = null
+    ): Single<PaginationResponse>
 
     /**
      * Returns a random GIF, limited by tag. Excluding the tag parameter will return a random GIF from the GIPHY catalog.
@@ -59,9 +61,9 @@ interface Api {
      */
     @GET("/v1/gifs/random")
     fun random(
-            api_key: String,
-            tag: String? = null,
-            rating: String?,
-            fmt: String? = null
-    ): List<Response>
+            @Query("api_key") api_key: String,
+            @Query("tag") tag: String? = null,
+            @Query("rating") rating: String? = null,
+            @Query("fmt") fmt: String? = null
+    ): Single<Response>
 }
