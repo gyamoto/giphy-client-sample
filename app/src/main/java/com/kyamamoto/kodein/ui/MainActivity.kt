@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.kyamamoto.kodein.R
+import com.kyamamoto.kodein.ui.trend.TrendActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         trend.setOnClickListener {
-            Snackbar.make(container, R.string.trend, Snackbar.LENGTH_SHORT).show()
+            TrendActivity.start(this)
         }
 
         random.setOnClickListener {

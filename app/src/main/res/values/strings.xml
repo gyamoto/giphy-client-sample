@@ -4,4 +4,6 @@
     <string name="trend">Trend</string>
     <string name="random">Random</string>
     <string name="search">Search</string>
+
+    <string name="description_image">Image</string>
 </resources>
