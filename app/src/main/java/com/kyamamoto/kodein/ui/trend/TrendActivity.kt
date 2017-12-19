@@ -10,8 +10,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.giphy.model.Gif
 import com.kyamamoto.kodein.R
+import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.redux.asBehaviorSubject
 import com.kyamamoto.kodein.ui.common.AbstractViewHolder
 import io.reactivex.disposables.Disposable
@@ -34,7 +34,7 @@ class TrendActivity : AppCompatActivity() {
 
     private lateinit var disposable: Disposable
     private lateinit var adapter: RecyclerView.Adapter<GiphyViewHolder>
-    private var items = emptyList<Gif>()
+    private var items = emptyList<Giphy>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,14 +86,15 @@ class TrendActivity : AppCompatActivity() {
     inner class GiphyViewHolder(parent: ViewGroup)
         : AbstractViewHolder(parent, R.layout.item_giphy) {
 
-        fun bind(gif: Gif) {
-            val a = itemView.image.layoutParams as? ConstraintLayout.LayoutParams
-            a?.let {
-                it.dimensionRatio = "${gif.images.preview_gif.width}:${gif.images.preview_gif.height}"
+        fun bind(giphy: Giphy) {
+            val layoutParam = itemView.image.layoutParams as? ConstraintLayout.LayoutParams
+            layoutParam?.let {
+                val size = giphy.gif.images.preview_gif
+                it.dimensionRatio = "${size.width}:${size.height}"
             }
 
             Glide.with(itemView.context)
-                    .load(gif.images.preview_gif.url)
+                    .load(giphy.gif.images.preview_gif.url)
                     .into(itemView.image)
         }
 

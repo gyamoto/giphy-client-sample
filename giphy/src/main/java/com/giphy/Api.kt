@@ -11,6 +11,10 @@ import retrofit2.http.Query
  */
 interface Api {
 
+    companion object {
+        const val DEFAULT_LIMIT = 25
+    }
+
     /**
      * Search all GIPHY GIFs for a word or phrase. Punctuation will be stripped and ignored. Use a plus or url encode for phrases. Example paul+rudd, ryan+gosling or american+psycho.
      *
@@ -26,7 +30,7 @@ interface Api {
     fun search(
             @Query("api_key") api_key: String,
             @Query("q") q: String,
-            @Query("limit") limit: Int? = 25,
+            @Query("limit") limit: Int? = DEFAULT_LIMIT,
             @Query("offset") offset: Int? = null,
             @Query("rating") rating: String? = null,
             @Query("lang") lang: String? = null,
@@ -45,7 +49,7 @@ interface Api {
     @GET("/v1/gifs/trending")
     fun trending(
             @Query("api_key") api_key: String,
-            @Query("limit") limit: Int? = 25,
+            @Query("limit") limit: Int? = DEFAULT_LIMIT,
             @Query("offset") offset: Int? = null,
             @Query("rating") rating: String? = null,
             @Query("fmt") fmt: String? = null

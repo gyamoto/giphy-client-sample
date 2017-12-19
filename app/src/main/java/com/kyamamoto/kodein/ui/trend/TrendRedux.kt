@@ -1,12 +1,14 @@
 package com.kyamamoto.kodein.ui.trend
 
 import android.support.annotation.VisibleForTesting
+import com.giphy.Api
 import com.giphy.ApiBuilder
 import com.giphy.model.Gif
-import com.giphy.model.PaginationResponse
+import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.redux.AsyncAction
 import com.kyamamoto.kodein.redux.createAsyncMiddleware
 import com.kyamamoto.kodein.redux.createLoggingMiddleware
+import io.reactivex.Completable
 import io.reactivex.Single
 import redux.api.Dispatcher
 import redux.api.Reducer
@@ -24,23 +26,31 @@ enum class TrendLoading {
 
 data class TrendState(
         val loading: TrendLoading = TrendLoading.NONE,
-        val items: List<Gif> = emptyList(),
+        val items: List<Giphy> = emptyList(),
         val error: Throwable? = null
 )
 
 sealed class TrendAction {
     class Refresh : TrendAction()
-    data class Append(val offset: Int) : TrendAction()
+    data class Append(val offset: Int = Api.DEFAULT_LIMIT) : TrendAction()
+    data class AddFavorite(val gif: Gif) : TrendAction()
+    data class RemoveFavorite(val gif: Gif) : TrendAction()
 }
 
 @VisibleForTesting
 val reducer = Reducer<TrendState> { state, action ->
     when (action) {
-        is TrendAction.Refresh -> {
-            state
+        is TrendAction.AddFavorite -> {
+            val newItems = state.items.map {
+                if (it.gif.id == action.gif.id) it.copy(favorite = true) else it
+            }
+            state.copy(items = newItems)
         }
-        is TrendAction.Append -> {
-            state
+        is TrendAction.RemoveFavorite -> {
+            val newItems = state.items.map {
+                if (it.gif.id == action.gif.id) it.copy(favorite = false) else it
+            }
+            state.copy(items = newItems)
         }
         else -> state
     }
@@ -50,7 +60,7 @@ val reducer = Reducer<TrendState> { state, action ->
 val asyncReducer = Reducer<TrendState> { state, action ->
     when (action) {
         is AsyncAction<*> -> when (action.tag) {
-            is TrendAction.Refresh -> action.reduce<TrendState, PaginationResponse>(
+            is TrendAction.Refresh -> action.reduce<TrendState, List<Giphy>>(
                     onStart = {
                         state.copy(
                                 loading = TrendLoading.REFRESH
@@ -59,7 +69,7 @@ val asyncReducer = Reducer<TrendState> { state, action ->
                     onSuccess = {
                         state.copy(
                                 loading = TrendLoading.NONE,
-                                items = it.data,
+                                items = it,
                                 error = null
                         )
                     },
@@ -69,7 +79,7 @@ val asyncReducer = Reducer<TrendState> { state, action ->
                                 error = it
                         )
                     })
-            is TrendAction.Append -> action.reduce<TrendState, PaginationResponse>(
+            is TrendAction.Append -> action.reduce<TrendState, List<Giphy>>(
                     onStart = {
                         state.copy(
                                 loading = TrendLoading.LOADING
@@ -78,7 +88,7 @@ val asyncReducer = Reducer<TrendState> { state, action ->
                     onSuccess = {
                         state.copy(
                                 loading = TrendLoading.NONE,
-                                items = state.items + it.data,
+                                items = state.items + it,
                                 error = null
                         )
                     },
@@ -99,8 +109,21 @@ class TrendRepository {
     // TODO: Inject
     private val api = ApiBuilder.build()
 
-    fun requestTrend(offset: Int = 0): Single<PaginationResponse> {
+    fun requestTrend(offset: Int = 0): Single<List<Giphy>> {
         return api.trending("HAgW7cCO48PXdJSSeoo7Dq5tttTu3M8r", offset)
+                .map {
+                    it.data.map { Giphy(it, false) }
+                }
+    }
+
+    fun addFavorite(gif: Gif): Completable {
+        // TODO
+        return Completable.complete()
+    }
+
+    fun removeFavorite(gif: Gif): Completable {
+        // TODO
+        return Completable.complete()
     }
 }
 
@@ -117,6 +140,16 @@ class TrendMiddleware(private val repository: TrendRepository) : Middleware<Tren
                 AsyncAction.of(
                         action,
                         repository.requestTrend(action.offset))
+            }
+            is TrendAction.AddFavorite -> {
+                AsyncAction.of(
+                        action,
+                        repository.addFavorite(action.gif).toSingle {})
+            }
+            is TrendAction.RemoveFavorite -> {
+                AsyncAction.of(
+                        action,
+                        repository.removeFavorite(action.gif).toSingle {})
             }
             else -> action
         }

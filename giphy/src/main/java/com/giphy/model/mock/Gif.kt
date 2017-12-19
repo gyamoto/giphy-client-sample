@@ -110,4 +110,5 @@ object Gif {
     )
 
     val mockList = listOf(mock, mock, mock, mock, mock)
+            .mapIndexed { index, gif -> gif.copy(id = index.toString()) }
 }
