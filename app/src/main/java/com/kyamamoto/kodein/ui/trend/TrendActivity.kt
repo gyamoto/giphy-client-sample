@@ -10,6 +10,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.KodeinInjector
+import com.github.salomonbrys.kodein.android.ActivityInjector
+import com.github.salomonbrys.kodein.instance
 import com.kyamamoto.kodein.R
 import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.redux.asBehaviorSubject
@@ -17,11 +21,12 @@ import com.kyamamoto.kodein.ui.common.AbstractViewHolder
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_trend.*
 import kotlinx.android.synthetic.main.item_giphy.view.*
+import redux.api.Store
 
 /**
  * Created by kyamamoto on 2017/12/11.
  */
-class TrendActivity : AppCompatActivity() {
+class TrendActivity : AppCompatActivity(), ActivityInjector {
 
     companion object {
 
@@ -32,11 +37,20 @@ class TrendActivity : AppCompatActivity() {
         }
     }
 
+    override val injector: KodeinInjector = KodeinInjector()
+
+    override fun provideOverridingModule() = Kodein.Module {
+        import(trendModule)
+    }
+
+    private val store: Store<TrendState> by instance()
+
     private lateinit var disposable: Disposable
     private lateinit var adapter: RecyclerView.Adapter<GiphyViewHolder>
     private var items = emptyList<Giphy>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initializeInjector()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trend)
 
@@ -60,8 +74,6 @@ class TrendActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val store = createTrendStore()
-
         store.dispatch(TrendAction.Refresh())
 
         disposable = store.asBehaviorSubject().subscribe({
@@ -81,6 +93,11 @@ class TrendActivity : AppCompatActivity() {
     override fun onStop() {
         disposable.dispose()
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        destroyInjector()
+        super.onDestroy()
     }
 
     inner class GiphyViewHolder(parent: ViewGroup)
