@@ -2,8 +2,6 @@ package com.kyamamoto.kodein.ui.trend
 
 import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.domain.giphy.GiphyMock
-import com.kyamamoto.kodein.redux.createAsyncMiddleware
-import com.kyamamoto.kodein.redux.createLoggingMiddleware
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -17,9 +15,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import redux.api.Store
-import redux.applyMiddleware
-import redux.combineReducers
-import redux.createStore
 import kotlin.test.assertEquals
 import com.giphy.model.mock.PaginationResponse as PaginationResponseMock
 
@@ -42,17 +37,7 @@ class TrendReduxKtTest {
             on { requestTrend(any()) } doReturn trendSubject
         }
 
-        // TODO: Inject
-        store = createStore(
-                combineReducers(
-                        reducer,
-                        asyncReducer),
-                TrendState(),
-                applyMiddleware(
-                        TrendMiddleware(repository),
-                        createLoggingMiddleware("TrendStore"),
-                        createAsyncMiddleware())
-        )
+        store = createTrendStore(TrendMiddleware(repository))
     }
 
     @Test
