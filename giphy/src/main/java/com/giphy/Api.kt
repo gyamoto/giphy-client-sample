@@ -28,7 +28,7 @@ interface Api {
      */
     @GET("/v1/gifs/search")
     fun search(
-            @Query("api_key") api_key: String,
+            @Query("api_key") api_key: String? = Const.API_KEY,
             @Query("q") q: String,
             @Query("limit") limit: Int? = DEFAULT_LIMIT,
             @Query("offset") offset: Int? = null,
@@ -48,7 +48,7 @@ interface Api {
      */
     @GET("/v1/gifs/trending")
     fun trending(
-            @Query("api_key") api_key: String,
+            @Query("api_key") api_key: String? = Const.API_KEY,
             @Query("limit") limit: Int? = DEFAULT_LIMIT,
             @Query("offset") offset: Int? = null,
             @Query("rating") rating: String? = null,
@@ -65,7 +65,7 @@ interface Api {
      */
     @GET("/v1/gifs/random")
     fun random(
-            @Query("api_key") api_key: String,
+            @Query("api_key") api_key: String? = Const.API_KEY,
             @Query("tag") tag: String? = null,
             @Query("rating") rating: String? = null,
             @Query("fmt") fmt: String? = null

@@ -109,7 +109,7 @@ val asyncReducer = Reducer<TrendState> { state, action ->
 class TrendRepository(private val api: Api) {
 
     fun requestTrend(offset: Int = 0): Single<List<Giphy>> {
-        return api.trending("HAgW7cCO48PXdJSSeoo7Dq5tttTu3M8r", offset)
+        return api.trending(offset = offset)
                 .map {
                     it.data.map { Giphy(it, false) }
                 }
