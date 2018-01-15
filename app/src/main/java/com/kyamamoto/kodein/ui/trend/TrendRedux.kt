@@ -2,8 +2,11 @@ package com.kyamamoto.kodein.ui.trend
 
 import android.support.annotation.VisibleForTesting
 import com.giphy.Api
-import com.giphy.ApiBuilder
 import com.giphy.model.Gif
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.instance
+import com.github.salomonbrys.kodein.singleton
 import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.redux.AsyncAction
 import com.kyamamoto.kodein.redux.createAsyncMiddleware
@@ -37,8 +40,7 @@ sealed class TrendAction {
     data class RemoveFavorite(val gif: Gif) : TrendAction()
 }
 
-@VisibleForTesting
-val reducer = Reducer<TrendState> { state, action ->
+private val reducer = Reducer<TrendState> { state, action ->
     when (action) {
         is TrendAction.AddFavorite -> {
             val newItems = state.items.map {
@@ -104,10 +106,7 @@ val asyncReducer = Reducer<TrendState> { state, action ->
     }
 }
 
-class TrendRepository {
-
-    // TODO: Inject
-    private val api = ApiBuilder.build()
+class TrendRepository(private val api: Api) {
 
     fun requestTrend(offset: Int = 0): Single<List<Giphy>> {
         return api.trending("HAgW7cCO48PXdJSSeoo7Dq5tttTu3M8r", offset)
@@ -157,13 +156,20 @@ class TrendMiddleware(private val repository: TrendRepository) : Middleware<Tren
     }
 }
 
-fun createTrendStore(): Store<TrendState> = createStore(
+fun createTrendStore(middleware: TrendMiddleware): Store<TrendState> = createStore(
         combineReducers(
                 reducer,
                 asyncReducer),
         TrendState(),
         applyMiddleware(
-                TrendMiddleware(TrendRepository()),
+                middleware,
                 createLoggingMiddleware("TrendStore"),
                 createAsyncMiddleware())
 )
+
+val trendModule = Kodein.Module {
+
+    bind<TrendRepository>() with singleton { TrendRepository(instance()) }
+    bind<TrendMiddleware>() with singleton { TrendMiddleware(instance()) }
+    bind<Store<TrendState>>() with singleton { createTrendStore(instance()) }
+}
