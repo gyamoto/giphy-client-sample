@@ -75,6 +75,9 @@ dependencies {
     // Giphy
     implementation project(':giphy')
 
+    // FavoriteStore
+    implementation project(':favoritestore')
+
     // View
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
