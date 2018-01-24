@@ -1,40 +1,27 @@
 package com.giphy
 
-import io.reactivex.schedulers.Schedulers.io
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.instance
 
 /**
- * https://developers.giphy.com/docs/
+ * Created by kyamamoto on 2018/01/22.
  */
 class ApiBuilder {
 
     companion object {
 
-        private const val TAG = "GiphyAPI"
+        private val kodein = Kodein {
+            import(sourceModule)
+            import(buildTypeModule)
+        }
 
-        fun build(): Api = Retrofit.Builder()
-                .baseUrl(Const.ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(buildClient())
-                .addCallAdapterFactory(
-                        RxJava2CallAdapterFactory.createWithScheduler(io())
-                )
-                .build()
-                .create(Api::class.java)
+        fun build(): Api {
 
-        private fun buildClient() = OkHttpClient.Builder()
-                .addInterceptor(
-                        HttpLoggingInterceptor {
-                            Timber.tag(TAG).d(it)
-                        }.apply {
-                            level = BuildType.LOG_LEVEL
-                        }
-                )
-                .build()
+            val source: SourceType = kodein.instance()
+            val buildType: BuildTypeConfig = kodein.instance()
+
+            return source.build(buildType)
+        }
+
     }
 }

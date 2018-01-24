@@ -27,15 +27,21 @@ android {
         java.srcDirs += "src/${name}/kotlin"
     }
 
-    flavorDimensions 'enviroment'
+    flavorDimensions 'source'
 
     productFlavors {
+        mock {
+            dimension 'source'
+            applicationIdSuffix '.mock'
+            versionNameSuffix '.mock'
+        }
         develop {
+            dimension 'source'
             applicationIdSuffix '.dev'
             versionNameSuffix ' dev'
         }
         product {
-
+            dimension 'source'
         }
     }
 

@@ -14,7 +14,7 @@ android {
     }
 
     buildTypes {
-        build {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -23,6 +23,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions 'source'
+
+    productFlavors {
+        mock {
+            dimension 'source'
+        }
+        develop {
+            dimension 'source'
+        }
+        product {
+            dimension 'source'
+        }
+    }
+
+    publishNonDefault true
+    defaultPublishConfig 'networkRelease'
 
     sourceSets.all {
         java.srcDirs += "src/${name}/kotlin"
@@ -33,12 +50,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_library_version"
+
+    // Retrofit and OkHttp
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // Kodein
+    implementation 'com.github.salomonbrys.kodein:kodein:4.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
