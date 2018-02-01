@@ -1,2 +1,2 @@
 # android-kodein
-Kodein sample. request to GPIHY and show list by Redux with DataBinding and MVP with Anko 
+Kodein sample. request to GPIHY and show list by Redux with DataBinding and MVVM(ACC) with Anko
