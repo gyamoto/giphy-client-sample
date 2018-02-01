@@ -169,8 +169,6 @@ fun createTrendStore(middleware: TrendMiddleware): Store<TrendState> = createSto
 
 val trendModule = Kodein.Module {
 
-    //    bind<TrendRepository>() with singleton { TrendRepository(instance()) }
-//    bind<TrendMiddleware>() with singleton { TrendMiddleware(instance()) }
     bind<Store<TrendState>>() with singleton {
         createTrendStore(TrendMiddleware(TrendRepository(instance())))
     }

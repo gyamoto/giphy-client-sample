@@ -1,26 +1,25 @@
 package com.kyamamoto.kodein.ui.trend
 
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.ActivityInjector
 import com.github.salomonbrys.kodein.instance
 import com.kyamamoto.kodein.R
+import com.kyamamoto.kodein.databinding.ActivityTrendBinding
+import com.kyamamoto.kodein.databinding.ItemGiphyBinding
 import com.kyamamoto.kodein.domain.giphy.Giphy
 import com.kyamamoto.kodein.redux.asBehaviorSubject
-import com.kyamamoto.kodein.ui.common.AbstractViewHolder
+import com.kyamamoto.kodein.ui.common.AbstractDataBindingViewHolder
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_trend.*
-import kotlinx.android.synthetic.main.item_giphy.view.*
 import redux.api.Store
 
 /**
@@ -45,30 +44,21 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
 
     private val store: Store<TrendState> by instance()
 
+    private lateinit var binding: ActivityTrendBinding
     private lateinit var disposable: Disposable
-    private lateinit var adapter: RecyclerView.Adapter<GiphyViewHolder>
-    private var items = emptyList<Giphy>()
+    private lateinit var giphyAdapter: GiphyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initializeInjector()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trend)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trend)
 
-        adapter = object : RecyclerView.Adapter<GiphyViewHolder>() {
+        giphyAdapter = GiphyAdapter()
 
-            override fun getItemCount(): Int = items.size
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiphyViewHolder {
-                return GiphyViewHolder(parent)
-            }
-
-            override fun onBindViewHolder(holder: GiphyViewHolder, position: Int) {
-                val item = items[position]
-                holder.bind(item)
-            }
+        binding.recycler.apply {
+            adapter = giphyAdapter
+            layoutManager = GridLayoutManager(context, 2, VERTICAL, false)
         }
-        recycler.adapter = adapter
-        recycler.layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
     }
 
     override fun onStart() {
@@ -77,12 +67,15 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
         store.dispatch(TrendAction.Refresh())
 
         disposable = store.asBehaviorSubject().subscribe({
-            Snackbar.make(recycler, "success! get ${it.items.size}git", Snackbar.LENGTH_SHORT)
-                    .show()
-            items = it.items
-            adapter.notifyDataSetChanged()
+            binding.state = it
+            giphyAdapter.items = it.items
+
+            if (it.items.isNotEmpty()) {
+                Snackbar.make(binding.recycler, "success! get ${it.items.size}git", Snackbar.LENGTH_SHORT)
+                        .show()
+            }
         }, {
-            Snackbar.make(recycler, "error! ${it.message}", Snackbar.LENGTH_SHORT)
+            Snackbar.make(binding.recycler, "error! ${it.message}", Snackbar.LENGTH_SHORT)
                     .setAction("action?", {
                         store.dispatch(TrendAction.Refresh())
                     })
@@ -99,21 +92,33 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
         destroyInjector()
         super.onDestroy()
     }
+}
 
-    inner class GiphyViewHolder(parent: ViewGroup)
-        : AbstractViewHolder(parent, R.layout.item_giphy) {
+class GiphyAdapter : RecyclerView.Adapter<GiphyViewHolder>() {
 
-        fun bind(giphy: Giphy) {
-            val layoutParam = itemView.image.layoutParams as? ConstraintLayout.LayoutParams
-            layoutParam?.let {
-                val size = giphy.gif.images.preview_gif
-                it.dimensionRatio = "${size.width}:${size.height}"
-            }
-
-            Glide.with(itemView.context)
-                    .load(giphy.gif.images.preview_gif.url)
-                    .into(itemView.image)
+    var items = emptyList<Giphy>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
         }
 
+    override fun getItemCount(): Int = items.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiphyViewHolder {
+        return GiphyViewHolder(parent)
     }
+
+    override fun onBindViewHolder(holder: GiphyViewHolder, position: Int) {
+        val item = items[position]
+        holder.bind(item)
+    }
+}
+
+class GiphyViewHolder(parent: ViewGroup)
+    : AbstractDataBindingViewHolder<ItemGiphyBinding>(parent, R.layout.item_giphy) {
+
+    fun bind(giphy: Giphy) {
+        binding.model = giphy
+    }
+
 }
