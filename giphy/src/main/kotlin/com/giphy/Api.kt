@@ -1,7 +1,7 @@
 package com.giphy
 
 import com.giphy.model.PaginationResponse
-import com.giphy.model.Response
+import com.giphy.model.RandomResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -65,5 +65,5 @@ interface Api {
             @Query("tag") tag: String? = null,
             @Query("rating") rating: String? = null,
             @Query("fmt") fmt: String? = null
-    ): Single<Response>
+    ): Single<RandomResponse>
 }
