@@ -1,6 +1,5 @@
 package com.kyamamoto.kodein.redux
 
-import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,6 +7,7 @@ import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import redux.api.Store
 import redux.api.enhancer.Middleware
+import timber.log.Timber
 
 /**
  * この[Store]を[Observable]として扱う
@@ -37,7 +37,7 @@ fun <S> createLoggingMiddleware(tag: String): Middleware<S> {
         val old = store.state
         val result = next.dispatch(action)
         val new = store.state
-        Log.v(tag, "$action: $old => $new")
+        Timber.tag(tag).v("$action: $old => $new")
         result
     }
 }
