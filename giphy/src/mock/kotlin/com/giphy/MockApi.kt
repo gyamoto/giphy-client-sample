@@ -1,7 +1,7 @@
 package com.giphy
 
 import com.giphy.model.PaginationResponse
-import com.giphy.model.Response
+import com.giphy.model.RandomResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.io
 import okhttp3.OkHttpClient
@@ -62,9 +62,9 @@ class Mock(private val delegate: BehaviorDelegate<Api>) : Api {
 
     override fun random(
             tag: String?, rating: String?, fmt: String?
-    ): Single<Response> {
+    ): Single<RandomResponse> {
 
-        return delegate.returningResponse(com.giphy.model.mock.Response.mock)
+        return delegate.returningResponse(com.giphy.model.mock.RandomResponse.mock)
                 .random(tag, rating, fmt)
     }
 
