@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.kyamamoto.kodein.R
 import com.kyamamoto.kodein.architecturecomponent.Resource
 import kotlinx.android.synthetic.main.activity_random.*
@@ -36,6 +37,7 @@ class RandomActivity : AppCompatActivity() {
             image.apply {
                 Glide.with(this)
                         .load(it?.response?.data?.fixed_width_downsampled_url)
+                        .transition(DrawableTransitionOptions.withCrossFade())
                         .into(this)
             }
 
