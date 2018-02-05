@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.github.salomonbrys.kodein.KodeinInjector
 import com.github.salomonbrys.kodein.android.ActivityInjector
 import com.kyamamoto.kodein.R
+import com.kyamamoto.kodein.ui.random.RandomActivity
 import com.kyamamoto.kodein.ui.trend.TrendActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(), ActivityInjector {
         }
 
         random.setOnClickListener {
-            Snackbar.make(container, R.string.random, Snackbar.LENGTH_SHORT).show()
+            RandomActivity.start(this)
         }
 
         search.setOnClickListener {

@@ -28,6 +28,8 @@
 
         <activity android:name=".ui.trend.TrendActivity" />
 
+        <activity android:name=".ui.random.RandomActivity" />
+
     </application>
 
 </manifest>

@@ -5,5 +5,8 @@
     <string name="random">Random</string>
     <string name="search">Search</string>
 
+    <string name="random_update">update gif</string>
+    <string name="random_requesting">requesting…</string>
+
     <string name="description_image">Image</string>
 </resources>
