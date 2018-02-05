@@ -76,7 +76,7 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
             }
         }, {
             Snackbar.make(binding.recycler, "error! ${it.message}", Snackbar.LENGTH_SHORT)
-                    .setAction("action?", {
+                    .setAction("Retry", {
                         store.dispatch(TrendAction.Refresh())
                     })
                     .show()

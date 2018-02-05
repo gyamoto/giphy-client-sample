@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.bumptech.glide.Glide
@@ -55,6 +56,12 @@ class RandomActivity : AppCompatActivity() {
 
             progress.apply {
                 visibility = if (isProgress) View.VISIBLE else View.GONE
+            }
+
+            it?.error?.let {
+                Snackbar.make(button, it.message.toString(), Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Retry", { viewModel.updateGif() })
+                        .show()
             }
 
         })
