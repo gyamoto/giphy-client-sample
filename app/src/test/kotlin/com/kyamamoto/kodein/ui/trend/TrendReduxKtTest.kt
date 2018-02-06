@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import redux.api.Store
 import kotlin.test.assertEquals
-import com.giphy.model.mock.PaginationResponse as PaginationResponseMock
+import com.kyamamoto.giphy.model.mock.PaginationResponse as PaginationResponseMock
 
 @RunWith(RobolectricTestRunner::class)
 class TrendReduxKtTest {

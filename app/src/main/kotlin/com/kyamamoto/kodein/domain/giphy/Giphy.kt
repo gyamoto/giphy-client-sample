@@ -1,6 +1,6 @@
 package com.kyamamoto.kodein.domain.giphy
 
-import com.giphy.model.Gif
+import com.kyamamoto.giphy.model.Gif
 
 /**
  * @param gif [Gif]

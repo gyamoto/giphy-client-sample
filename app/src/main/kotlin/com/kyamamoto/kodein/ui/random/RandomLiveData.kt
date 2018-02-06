@@ -1,8 +1,8 @@
 package com.kyamamoto.kodein.ui.random
 
 import android.arch.lifecycle.LiveData
-import com.giphy.ApiBuilder
-import com.giphy.model.RandomResponse
+import com.kyamamoto.giphy.ApiBuilder
+import com.kyamamoto.giphy.model.RandomResponse
 import com.kyamamoto.kodein.architecturecomponent.Resource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

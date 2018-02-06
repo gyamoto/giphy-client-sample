@@ -3,7 +3,7 @@ package com.kyamamoto.kodein.ui.random
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import com.giphy.model.RandomResponse
+import com.kyamamoto.giphy.model.RandomResponse
 import com.kyamamoto.kodein.architecturecomponent.Resource
 
 /**

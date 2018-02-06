@@ -1,6 +1,6 @@
 package com.kyamamoto.kodein.domain.giphy
 
-import com.giphy.model.mock.Gif
+import com.kyamamoto.giphy.model.mock.Gif
 
 object GiphyMock {
 

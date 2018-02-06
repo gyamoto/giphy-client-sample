@@ -1,7 +1,7 @@
 package com.kyamamoto.kodein.domain
 
-import com.giphy.Api
-import com.giphy.ApiBuilder
+import com.kyamamoto.giphy.Api
+import com.kyamamoto.giphy.ApiBuilder
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton

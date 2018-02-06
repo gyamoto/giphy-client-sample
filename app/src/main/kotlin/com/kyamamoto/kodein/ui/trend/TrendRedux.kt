@@ -1,8 +1,8 @@
 package com.kyamamoto.kodein.ui.trend
 
 import android.support.annotation.VisibleForTesting
-import com.giphy.Api
-import com.giphy.model.Gif
+import com.kyamamoto.giphy.Api
+import com.kyamamoto.giphy.model.Gif
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
