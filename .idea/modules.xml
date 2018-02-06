@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/giphy/giphy.iml" filepath="$PROJECT_DIR$/giphy/giphy.iml" />
       <module fileurl="file://$PROJECT_DIR$/giphyy/giphy.iml" filepath="$PROJECT_DIR$/giphyy/giphy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persistentrandom/persistentrandom.iml" filepath="$PROJECT_DIR$/persistentrandom/persistentrandom.iml" />
     </modules>
   </component>
 </project>
