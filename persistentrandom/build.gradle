@@ -14,6 +14,10 @@ android {
 
     }
 
+    sourceSets.all {
+        java.srcDirs += "src/${name}/kotlin"
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -21,8 +25,23 @@ android {
         }
     }
 
-    sourceSets.all {
-        java.srcDirs += "src/${name}/kotlin"
+    // giphyモジュールに依存するためフレーバーを揃える
+    flavorDimensions 'source'
+
+    productFlavors {
+        mock {
+            dimension 'source'
+        }
+        develop {
+            dimension 'source'
+        }
+        product {
+            dimension 'source'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
 }
@@ -33,9 +52,17 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core-ktx:$ktx_version"
 
+    // Giphy
+    implementation project(':giphy')
+
+    // Architecture Components, LiveData
+    implementation "android.arch.lifecycle:livedata:$arch_version"
+    // Test helpers for LiveData
+    testImplementation "android.arch.core:core-testing:$arch_version"
+
     testImplementation 'junit:junit:4.12'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation 'org.mockito:mockito-inline:2.13.0'
     testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
-    testImplementation 'org.robolectric:robolectric:3.6.1'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.0.0'
 }
