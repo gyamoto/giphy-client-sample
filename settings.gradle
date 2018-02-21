@@ -1,1 +1,5 @@
 include ':app', ':giphy', ':persistentrandom'
+
+def moduleDir = new File('modules')
+project(':giphy').projectDir = new File(moduleDir, 'giphy')
+project(':persistentrandom').projectDir = new File(moduleDir, 'persistentrandom')
