@@ -1,16 +1,33 @@
 package com.kyamamoto.persistentrandom.model
 
+import android.support.annotation.Nullable
+import com.github.gfx.android.orma.annotation.Column
+import com.github.gfx.android.orma.annotation.PrimaryKey
+import com.github.gfx.android.orma.annotation.Setter
+import com.github.gfx.android.orma.annotation.Table
 import com.kyamamoto.giphy.model.Meta
 
 /**
  * Created by kyamamoto on 2018/02/16.
  */
+@Table
 data class Meta(
 
+        @PrimaryKey
+        @Setter("metaId")
+        val metaId: String = "",
+
+        @Column
+        @Setter("msg")
         val msg: String,
 
+        @Column
+        @Setter("status")
         val status: Int,
 
+        @Column
+        @Setter("response_id")
+        @Nullable
         val response_id: String? = null
 ) {
     constructor(meta: Meta) : this(

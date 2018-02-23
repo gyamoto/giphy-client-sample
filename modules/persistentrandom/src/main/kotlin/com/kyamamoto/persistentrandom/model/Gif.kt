@@ -1,60 +1,115 @@
 package com.kyamamoto.persistentrandom.model
 
+import com.github.gfx.android.orma.annotation.Column
+import com.github.gfx.android.orma.annotation.PrimaryKey
+import com.github.gfx.android.orma.annotation.Setter
+import com.github.gfx.android.orma.annotation.Table
 import com.kyamamoto.giphy.model.RandomGif
 
 /**
  * Created by kyamamoto on 2018/02/16.
  */
+@Table
 data class Gif(
 
+        @Column
+        @Setter("type")
         val type: String,
 
+        @PrimaryKey(auto = false)
+        @Setter("id")
         val id: String,
 
+        @Column
+        @Setter("url")
         val url: String,
 
+        @Column
+        @Setter("image_original_url")
         val image_original_url: String,
 
+        @Column
+        @Setter("image_url")
         val image_url: String,
 
+        @Column
+        @Setter("image_mp4_url")
         val image_mp4_url: String,
 
+        @Column
+        @Setter("image_frames")
         val image_frames: String,
 
+        @Column
+        @Setter("image_width")
         val image_width: String,
 
+        @Column
+        @Setter("image_height")
         val image_height: String,
 
+        @Column
+        @Setter("fixed_height_downsampled_url")
         val fixed_height_downsampled_url: String,
 
+        @Column
+        @Setter("fixed_height_downsampled_width")
         val fixed_height_downsampled_width: String,
 
+        @Column
+        @Setter("fixed_height_downsampled_height")
         val fixed_height_downsampled_height: String,
 
+        @Column
+        @Setter("fixed_width_downsampled_url")
         val fixed_width_downsampled_url: String,
 
+        @Column
+        @Setter("fixed_width_downsampled_width")
         val fixed_width_downsampled_width: String,
 
+        @Column
+        @Setter("fixed_width_downsampled_height")
         val fixed_width_downsampled_height: String,
 
+        @Column
+        @Setter("fixed_height_small_url")
         val fixed_height_small_url: String,
 
+        @Column
+        @Setter("fixed_height_small_still_url")
         val fixed_height_small_still_url: String,
 
+        @Column
+        @Setter("fixed_height_small_width")
         val fixed_height_small_width: String,
 
+        @Column
+        @Setter("fixed_height_small_height")
         val fixed_height_small_height: String,
 
+        @Column
+        @Setter("fixed_width_small_url")
         val fixed_width_small_url: String,
 
+        @Column
+        @Setter("fixed_width_small_still_url")
         val fixed_width_small_still_url: String,
 
+        @Column
+        @Setter("fixed_width_small_width")
         val fixed_width_small_width: String,
 
+        @Column
+        @Setter("fixed_width_small_height")
         val fixed_width_small_height: String,
 
+        @Column
+        @Setter("username")
         val username: String,
 
+        @Column
+        @Setter("caption")
         val caption: String
 ) {
     constructor(gif: RandomGif) : this(
