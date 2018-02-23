@@ -21,7 +21,11 @@ class RamdomResponseStore(context: Context) : Store<RandomResponse> {
         set(value) {
             value?.let {
                 orma.deleteAll()
-                orma.insertIntoRandom(Random(it))
+
+                val random = Random(it)
+                orma.insertIntoGif(random.data)
+                orma.insertIntoMeta(random.meta)
+                orma.insertIntoRandom(random)
             }
         }
 

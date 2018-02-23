@@ -6,6 +6,7 @@ import com.github.salomonbrys.kodein.KodeinAware
 import com.github.salomonbrys.kodein.android.autoAndroidModule
 import com.github.salomonbrys.kodein.lazy
 import com.kyamamoto.kodein.domain.domainModule
+import com.kyamamoto.persistentrandom.PersistentRandom
 import timber.log.Timber
 
 /**
@@ -25,6 +26,8 @@ class KodeinApplication : Application(), KodeinAware {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
+        PersistentRandom.init(this)
     }
 
 }
