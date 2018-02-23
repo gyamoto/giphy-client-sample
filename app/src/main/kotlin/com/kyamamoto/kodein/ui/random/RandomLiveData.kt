@@ -29,10 +29,14 @@ class RandomLiveData(
 
         api.random()
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map {
+                    store.item = it
+                    it
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     value = Resource.success(it)
-                    store.item = it
                 }, {
                     value = Resource.error(value?.response, it)
                 })
