@@ -1,5 +1,5 @@
-include ':app', ':giphy', ':persistentrandom'
+include ':app', ':api', ':db'
 
 def moduleDir = new File('modules')
-project(':giphy').projectDir = new File(moduleDir, 'giphy')
-project(':persistentrandom').projectDir = new File(moduleDir, 'persistentrandom')
+project(':api').projectDir = new File(moduleDir, 'api')
+project(':db').projectDir = new File(moduleDir, 'db')

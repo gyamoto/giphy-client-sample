@@ -7,7 +7,7 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        applicationId "com.kyamamoto.kodein"
+        applicationId "com.gyamoto.giphy"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -89,9 +89,9 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$arch_version"
 
     // Giphy
-    implementation project(':giphy')
+    implementation project(':api')
     // PersistentRandom
-    implementation project(':persistentrandom')
+    implementation project(':db')
 
     // View
     implementation 'com.github.bumptech.glide:glide:4.5.0'

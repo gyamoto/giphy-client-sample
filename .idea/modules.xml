@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Giphy.iml" filepath="$PROJECT_DIR$/Giphy.iml" />
       <module fileurl="file://$PROJECT_DIR$/InKodein.iml" filepath="$PROJECT_DIR$/InKodein.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/api/giphy.iml" filepath="$PROJECT_DIR$/modules/api/giphy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/db/persistentrandom.iml" filepath="$PROJECT_DIR$/modules/db/persistentrandom.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/giphy/giphy.iml" filepath="$PROJECT_DIR$/modules/giphy/giphy.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/persistentrandom/persistentrandom.iml" filepath="$PROJECT_DIR$/modules/persistentrandom/persistentrandom.iml" />
     </modules>
