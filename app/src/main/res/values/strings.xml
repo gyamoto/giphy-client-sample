@@ -5,6 +5,11 @@
     <string name="random">Random</string>
     <string name="search">Search</string>
 
+    <string name="common_error">Error! %s</string>
+    <string name="common_retry">Retry!</string>
+
+    <string name="trend_success">Success! get %d images</string>
+
     <string name="random_update">update gif</string>
     <string name="random_requesting">requesting…</string>
 

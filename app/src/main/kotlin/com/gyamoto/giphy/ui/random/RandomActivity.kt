@@ -34,8 +34,9 @@ class RandomActivity : AppCompatActivity() {
         viewModel.random.observe(this, Observer {
 
             it?.error?.let {
-                Snackbar.make(button, it.message.toString(), Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Retry", { viewModel.updateGif() })
+                val message = getString(R.string.common_error, it.message)
+                Snackbar.make(button, message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.common_retry, { viewModel.updateGif() })
                         .show()
             }
         })

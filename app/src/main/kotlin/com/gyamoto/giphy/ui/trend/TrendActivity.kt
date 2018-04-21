@@ -52,13 +52,15 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
             binding.state = it
 
             if (it.items.isNotEmpty()) {
-                Snackbar.make(binding.recycler, "success! get ${it.items.size}git", Snackbar.LENGTH_SHORT)
+                val message = getString(R.string.trend_success, it.items.size)
+                Snackbar.make(binding.recycler, message, Snackbar.LENGTH_SHORT)
                         .show()
             }
 
             it.error?.let {
-                Snackbar.make(binding.recycler, "error! ${it.message}", Snackbar.LENGTH_SHORT)
-                        .setAction("Retry", {
+                val message = getString(R.string.common_error, it.message)
+                Snackbar.make(binding.recycler, message, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.common_retry, {
                             store.dispatch(TrendAction.Refresh())
                         })
                         .show()
