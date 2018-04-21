@@ -19,7 +19,7 @@
             android:id="@+id/image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:centerCropImageUrl="@{model.gif.images.preview_gif.url}"
+            android:centerCropImageUrl="@{model.gif.images.downsized.url}"
             android:contentDescription="@string/description_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
