@@ -8,12 +8,17 @@ import com.bumptech.glide.TransitionOptions
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
 
-@BindingAdapter("android:centerCropImageUrl")
-fun ImageView.setCenterCropImageUrl(url: String?) {
-    setImageUrl(url, RequestOptions().centerCrop())
+@BindingAdapter("imageUrl")
+fun ImageView.setImageUrl(url: String) {
+    setImage(url)
 }
 
-fun ImageView.setImageUrl(
+@BindingAdapter("centerCropImageUrl")
+fun ImageView.setCenterCropImageUrl(url: String?) {
+    setImage(url, RequestOptions().centerCrop())
+}
+
+private fun ImageView.setImage(
         url: String?,
         requestOptions: RequestOptions = RequestOptions(),
         transitionOptions: TransitionOptions<*, Drawable> = withCrossFade()) {
