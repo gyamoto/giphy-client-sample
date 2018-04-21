@@ -1,24 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
-    ext.ktx_version = '0.2'
-    ext.support_library_version = '27.1.0'
-    ext.rx_version = '2.1.7'
-    ext.arch_version = '1.1.0'
-    ext.retrofit_version = '2.3.0'
-    ext.timber_version = '4.6.0'
+    ext.kotlin_version = '1.2.40'
+    ext.ktx_version = '0.3'
+    ext.support_library_version = '27.1.1'
+    ext.rx_version = '2.1.12'
+    ext.arch_version = '1.1.1'
+    ext.retrofit_version = '2.4.0'
+    ext.timber_version = '4.7.0'
 
     repositories {
         google()
         jcenter()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
     }
 }
 
@@ -31,4 +33,19 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
 }
