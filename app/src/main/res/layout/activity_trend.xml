@@ -11,18 +11,22 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primaryLightColor">
 
-        <com.gyamoto.giphy.ui.trend.TrendRecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/primaryLightColor"
-            app:items="@{state.items}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{state.isRefreshing()}">
+
+            <com.gyamoto.giphy.ui.trend.TrendRecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:items="@{state.items}" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.constraint.ConstraintLayout>
 
 </layout>

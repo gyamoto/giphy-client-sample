@@ -41,6 +41,9 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
         initializeInjector()
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trend)
+        binding.refresh.setOnRefreshListener {
+            store.dispatch(TrendAction.Refresh())
+        }
     }
 
     override fun onStart() {
@@ -51,7 +54,7 @@ class TrendActivity : AppCompatActivity(), ActivityInjector {
         disposable = store.asBehaviorSubject().subscribe {
             binding.state = it
 
-            if (it.items.isNotEmpty()) {
+            if (!it.isRefreshing && it.items.isNotEmpty()) {
                 val message = getString(R.string.trend_success, it.items.size)
                 Snackbar.make(binding.recycler, message, Snackbar.LENGTH_SHORT)
                         .show()

@@ -1,12 +1,12 @@
 package com.gyamoto.giphy.ui.trend
 
 import android.support.annotation.VisibleForTesting
-import com.gyamoto.api.Api
-import com.gyamoto.api.model.Gif
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
+import com.gyamoto.api.Api
+import com.gyamoto.api.model.Gif
 import com.gyamoto.giphy.domain.giphy.Giphy
 import com.gyamoto.giphy.redux.AsyncAction
 import com.gyamoto.giphy.redux.createAsyncMiddleware
@@ -31,7 +31,10 @@ data class TrendState(
         val loading: TrendLoading = TrendLoading.NONE,
         val items: List<Giphy> = emptyList(),
         val error: Throwable? = null
-)
+) {
+    var isRefreshing: Boolean = true
+        get() = loading == TrendLoading.REFRESH
+}
 
 sealed class TrendAction {
     class Refresh : TrendAction()
