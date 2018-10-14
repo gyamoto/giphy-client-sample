@@ -1,2 +1,2 @@
-# giphy
-Kodein sample. request to GPIHY and show list by Redux with DataBinding and MVVM(ACC) with DataBinding
+# giphy-client
+Kodein sample. request to GPIHY by Redux with DataBinding and MVVM(ACC) with DataBinding
